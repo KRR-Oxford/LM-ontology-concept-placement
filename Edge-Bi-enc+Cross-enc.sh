@@ -1,26 +1,32 @@
 #!/bin/bash
 
-# setting for BLINKout - BLINK + syn handling + NIL representation and prediction
+# This shell script executes:
+# (i) Edge search with Edge-Bi-encoder training, evaluation
+# (ii) Edge enrichment
+# (iii) Edge selection: Edge-Cross-encoder
 
 # after setting these parameters as below
-# eval_set=test-NIL,test-NIL-complex # train,valid,test (can have combinations of them separated using comma)
+# eval_set=train,valid,valid-NIL,test-in-KB,test-NIL # train,valid,test (can have combinations of them separated using comma)
 # eval_biencoder=true
-# save_all_predictions=true
-# use_cand_analysis=true
+# save_all_predictions=false
+# use_cand_analysis=false
+# train_cross=true
 
-# the bi-encoder evaluation can be run as follows
-# ./step_all_BLINKout+_eval_bienc_new.sh $1 $2 $3 $4 $5 
+# the bi-encoder + cross-encoder evaluation can be run as follows
+# ./step_all_BLINKout+_eval_bienc_cross.sh $1 $2 $3 $4 $5 
 
 # $1, subset
 # $2, whether to use context
 # $3, top-k value
 # $4, number of edge seeds before edge enrichment into top-k
 # $5, biencoder training batch size
+# $6, whether to use a sample of first n rows of mention-edge pairs for creating data for cross-encoder.
+# $7, n rows mention-edge pairs for creating data for cross-encoder
 
 source activate blink38
 
 # setting which GPU
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=0
 #export CUDA_LAUNCH_BLOCKING=1 # for debugging 
 
 # in the scripts below
@@ -31,7 +37,7 @@ export CUDA_VISIBLE_DEVICES=1
 # pipeline as script
 dataset=mm+ #mm+
 snomed_subset_mark=$1 #Disease (disorders) or CPP (clinical findings, procedures, pharmaceutical)
-mm_data_setting=st21pv # for mm only, full or st21pv (only tested full to ensure a larger number of mentions an$d NILs; and st21pv only for mm+)
+mm_data_setting=st21pv # for mm only, full or st21pv (only tested full to ensure a larger number of mentions and NILs; and st21pv only for mm+)
 mm_onto_ver_model_mark=2017AA # for mm only, 2017AA_pruned0.1 or 2017AA_pruned0.2, 2014AB, 2015AB; for mm+, 2017AA
 mm_onto_ver=2017AA # for mm only, 2017AA_pruned0.1 or 2017AA_pruned0.2, 2014AB, 2015AB; for mm+, 2017AA
 use_best_top_k=true #true
@@ -64,10 +70,9 @@ then
 
   max_cand_length=128
   max_seq_length=160
-  bi_enc_eval_interval=50000
-  cross_enc_eval_interval=2000
+  eval_interval=2000
   aggregating_factor=1 #20 # 50 for NILK-sample, default as 20 for the other datasets, predicting more times top-k, so that after synonym aggregation there is still top-k candidates.
-  num_train_epochs_bi_enc=1 #3
+  num_train_epochs_bi_enc=1 #1 #3
   num_train_epochs_cross_enc=4 #1 #4
 
   cross_enc_epoch_name=''
@@ -80,7 +85,7 @@ use_synonyms=false
 use_context=$2
 #bi_enc_model_size=large
 bi_enc_model_size=base
-lowercase=true
+owercase=true
 #max_ctx_length=`expr $max_seq_length - $max_cand_length` # so far hard coded to 32``
 #bi_enc_bertmodel=bert-${bi_enc_model_size}-uncased
 #bi_enc_bertmodel=dmis-lab/biobert-base-cased-v1.2;lowercase=false # remember to set lowercase to false if using this model
@@ -93,6 +98,7 @@ bi_enc_bertmodel=cambridgeltl/SapBERT-from-PubMedBERT-fulltext
 #bi_enc_bertmodel=prajjwal1/bert-tiny
 #bi_enc_bertmodel=chaoyi-wu/PMC_LLAMA_7B
 bi_enc_model_mark='-sapbert'
+#bi_enc_model_mark='-pubmedbert'
 biencoder_batch_size=$5
 use_debug_bi_enc=false
 debug_max_lines=1000
@@ -100,20 +106,20 @@ loss_mark='-tl' #-tl #''
 train_bi=false
 rep_ents=false # set to true if transfering one biencoder to another dataset
 bs_cand_enc=50 # for entity representation bs as 2000 (max 2300) for NILK with BERT-base around 40g memory use
-use_debug_eval_bienc=false
-debug_max_lines_eval_bienc=10000 #10000 #200000 #10000
+bs_eval_bienc=8 # batch size for eval_biencoder
+use_debug_eval_bienc=$6
+debug_max_lines_eval_bienc=$7 #200000 #10000 #200000 #10000 # a set of lines
+debug_random_sample_eval_bienc=false # true or false
 #eval_set=train,valid,test-in-KB,test-NIL,test-NIL-complex # train,valid,test (can have combinations of them separated using comma)
-#eval_set=valid,test-in-KB,test-NIL #,test-NIL-complex # train,valid,test (can have combinations of them separated using comma)
-#eval_set=train,valid,valid-NIL,test-in-KB,test-NIL
-#eval_set=train
-eval_set=valid-NIL,test-NIL
-#eval_set=test-NIL
+eval_set=train,valid
+#eval_set=train-part1-500,train-part2-500 #,train-part3-50k,train-part4-50k,valid
+#eval_set=train-all,valid-NIL
 edge_cand_enrich=true
 edge_ranking_by_score=true
 use_leaf_edge_score=false
-eval_biencoder=true
-save_all_predictions=true # this is solely used if evaluating with use_cand_analysis (but not for prompt generation or fine-tuning with the generated prompts)
-use_cand_analysis=true
+eval_biencoder=false
+save_all_predictions=false # this is solely used if evaluating with use_cand_analysis (but not for prompt generation or fine-tuning with the generated prompts)
+use_cand_analysis=false
 #use_debug_cross_enc=${use_debug_bi_enc}
 #debug_max_lines_eval_cross=${debug_max_lines_eval_bienc}
 train_cross=false
@@ -122,7 +128,7 @@ use_NIL_tag=false
 use_NIL_desc=false
 use_NIL_desc_tag=false
 use_debug_inference=true
-inference=false
+inference=true
 bs_inference=8
 crossencoder_model_size=base #base #vs. large
 #cross_enc_bertmodel=bert-${crossencoder_model_size}-uncased
@@ -316,6 +322,13 @@ else
   arg_debug_for_eval_bienc=''
 fi
 
+if [ "$debug_random_sample_eval_bienc" = true ]
+then
+  arg_debug_random_sample='--debug_random_sample'
+else
+  arg_debug_random_sample=''
+fi
+
 if [ "$crossencoder_model_size" = large ]
 then
   crossencoder_model_name=original-large-${crossenc_syn_mark}-NIL${NIL_rep_mark}-top${top_k_cross}${post_fix_cand}${further_model_mark}
@@ -367,7 +380,7 @@ then
     --bert_model ${bi_enc_bertmodel}  \
     --type_optimization all_encoder_layers  \
     --print_interval  100 \
-    --eval_interval ${bi_enc_eval_interval} \
+    --eval_interval ${eval_interval} \
     ${arg_lowercase} \
     --shuffle \
     --data_parallel \
@@ -437,7 +450,7 @@ then
       ${arg_use_context} \
       --max_context_length 32   \
       --max_cand_length ${max_cand_length}   \
-      --eval_batch_size 8    \
+      --eval_batch_size ${bs_eval_bienc}    \
       --bert_model ${bi_enc_bertmodel}  \
       --path_to_model models/biencoder/$biencoder_model_name/pytorch_model.bin \
       --data_parallel \
@@ -464,6 +477,7 @@ then
       ${arg_syn} \
       ${arg_debug_for_eval_bienc} \
       --debug_max_lines ${debug_max_lines_eval_bienc} \
+      ${arg_debug_random_sample} \
       ${arg_gen_extra_features}
 fi
 
@@ -503,7 +517,7 @@ then
     --type_optimization all_encoder_layers  \
     --data_parallel \
     --print_interval  100 \
-    --eval_interval ${cross_enc_eval_interval}  \
+    --eval_interval ${eval_interval}  \
     ${arg_lowercase} \
     --top_k $top_k_cross  \
     --add_linear  \

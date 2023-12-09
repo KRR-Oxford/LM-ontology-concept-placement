@@ -2,7 +2,7 @@
 
 import openai
 # TEST
-openai.api_key = "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"
+openai.api_key = "[YOUR OPENAI API KEY]"
 import os
 from Llama_2_finetuning import prompt_concat_ctx_and_men, prompt_id_removal, prompt_correction
 import time

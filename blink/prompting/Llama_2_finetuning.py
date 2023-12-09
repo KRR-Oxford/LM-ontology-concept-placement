@@ -172,7 +172,7 @@ def format_instruction(sample,remove_id_in_prompt=REMOVE_ID_IN_PROMPT,cot=USE_CO
     return template
 
 if __name__ == "__main__":
-    cmd = "huggingface-cli login --token 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"
+    cmd = "huggingface-cli login --token [YOUR HUGGINGFACE TOKEN]"
     p = Popen(cmd, shell=True, stderr=STDOUT)
     p.wait()
 
