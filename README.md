@@ -19,13 +19,18 @@ See `requirements-LLM.txt`, for running instruction tuning LLMs.
 
 Examples to install packages using conda (optional):
 
-`conda create -n onto38 -y python=3.8 && conda activate onto38`
+```
+conda create -n onto38 -y python=3.8
+conda activate onto38
+pip install -r requirements.txt
+conda deactivate
+```
 
-`pip install -r requirements.txt`
-
-`conda create -n ontollm38 -y python=3.8 && conda activate ontollm38`
-
-`pip install -r requirements-LLM.txt`
+```conda create -n ontollm38 -y python=3.8
+conda activate ontollm38
+pip install -r requirements-LLM.txt
+conda deactivate
+```
 
 # Model Training and Inference
 See `Edge-Bi-enc+prompt-generation.sh` for the steps of running Edge-Bi-encoder, edge enrichment, and prompt generation, with running examples in `Edge-Bi-enc+prompt-gen-run-example.sh`.
