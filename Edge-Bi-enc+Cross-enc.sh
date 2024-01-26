@@ -85,7 +85,7 @@ use_synonyms=false
 use_context=$2
 #bi_enc_model_size=large
 bi_enc_model_size=base
-owercase=true
+lowercase=true
 #max_ctx_length=`expr $max_seq_length - $max_cand_length` # so far hard coded to 32``
 #bi_enc_bertmodel=bert-${bi_enc_model_size}-uncased
 #bi_enc_bertmodel=dmis-lab/biobert-base-cased-v1.2;lowercase=false # remember to set lowercase to false if using this model
@@ -122,7 +122,7 @@ save_all_predictions=false # this is solely used if evaluating with use_cand_ana
 use_cand_analysis=false
 #use_debug_cross_enc=${use_debug_bi_enc}
 #debug_max_lines_eval_cross=${debug_max_lines_eval_bienc}
-train_cross=false
+train_cross=true
 dynamic_emb_extra_ft_baseline=false
 use_NIL_tag=false
 use_NIL_desc=false
