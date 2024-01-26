@@ -4,7 +4,7 @@ Language Model based ontology concept placement
 The study provides a Language Model based framework (including pre-trained and large language models) for new concept placement in ontologies, where the input includes a mention in a text corpus together with an ontology, and the outputs are the predicted edges in the ontology to place the mention.
 
 The methods combines LMs together with ontology structure, and includes three steps:
-* (concept or) edge search, 
+* edge search (and concept search), 
 * edge formation and enrichment, and 
 * edge selection. 
 
@@ -17,6 +17,16 @@ See `requirements.txt`, for running Edge-Bi-encoder, Edge-Cross-encoder, Inverte
 
 See `requirements-LLM.txt`, for running instruction tuning LLMs.
 
+Examples to install packages using conda (optional):
+
+`conda create -n onto38 -y python=3.8 && conda activate onto38
+
+pip install -r requirements.txt`
+
+`conda create -n ontollm38 -y python=3.8 && conda activate ontollm38
+
+pip install -r requirements-LLM.txt`
+
 # Model Training and Inference
 See `Edge-Bi-enc+prompt-generation.sh` for the steps of running Edge-Bi-encoder, edge enrichment, and prompt generation, with running examples in `Edge-Bi-enc+prompt-gen-run-example.sh`.
 
@@ -24,9 +34,9 @@ See `Edge-Bi-enc+Cross-enc.sh` for the steps of running Edge-Bi-encoder, edge en
 
 See `run_tune_LLAMA_2_from_data_creation.sh` a running example for data generation, instruction-tuning, and prompting of LLAMA-2.
 
-See `blink/prompt/run_search_snomed_disease-5to10.sh` and similar files for the examples of running Inverted Index and fixed embedding based approarches.
+See `blink/prompting/run_search_snomed_disease-5to10.sh` and similar files for the examples of running Inverted Index and fixed embedding based approarches.
 
-See other files in `blink/prompt` for the prompting of GPT-3.5-turbo, FLAN-T5, and Llama-2.
+See other files in `blink/prompting` for the prompting of GPT-3.5-turbo, FLAN-T5, and Llama-2.
 
 For all Edge-Bi-enc and Edge-Cross-enc scripts above:
 * setting `train_bi` (train Bi-encoder), `rep_ents` (pre-calculate edge embeddings), `eval_biencoder` (inference with Bi-encoder and get data for cross encoder), `train_cross` (train Cross-encoder), `inference` (whole inference) to `true` to select to perform (or not perform) each step. 
@@ -36,7 +46,7 @@ For Edge-Bi-enc:
 * setting `use_cand_analysis` (evaluate Bi-encoder results and generating initial instructions and prompts for LLMs) to true to perform the step.
 
 # Datasets
-Our work uses the datasets at [Zenodo](https://zenodo.org/record/8228005) and its JSON keys are described in the `dataset` folder. 
+Our work uses the datasets at [Zenodo](https://zenodo.org/records/10432003) and its JSON keys are described in the `dataset` folder. 
 
 # Data and processing sources
 Before data creation, the below sources need to be downloaded.
