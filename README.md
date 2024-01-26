@@ -26,7 +26,8 @@ pip install -r requirements.txt
 conda deactivate
 ```
 
-```conda create -n ontollm38 -y python=3.8
+```
+conda create -n ontollm38 -y python=3.8
 conda activate ontollm38
 pip install -r requirements-LLM.txt
 conda deactivate
