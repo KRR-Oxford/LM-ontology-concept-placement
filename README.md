@@ -1,9 +1,10 @@
 # LM-ontology-concept-placement
-Language Model based ontology concept placement
 
-The study provides a Language Model based framework (including pre-trained and large language models) for new concept placement in ontologies, where the input includes a mention in a text corpus together with an ontology, and the outputs are the predicted edges in the ontology to place the mention.
+This is the official repository for [A Language Model based Framework for New Concept Placement in Ontologies](https://arxiv.org/abs/2402.17897), accepted for [ESWC 2024](https://2024.eswc-conferences.org/accepted-papers/).
 
-The methods combines LMs together with ontology structure, and includes three steps:
+The study provides a Language Model based framework (including pre-trained and large language models) for new concept placement in ontologies, where the input includes a mention in a text corpus with an ontology, and the outputs are the predicted edges in the ontology to place the mention.
+
+The method combines LMs with ontology structure, and includes three steps:
 * edge search (and concept search), 
 * edge formation and enrichment, and 
 * edge selection. 
@@ -49,13 +50,13 @@ For all Edge-Bi-enc and Edge-Cross-enc scripts above:
 * setting `eval_set` to `train`,`valid`,`valid-NIL`,`test-NIL` with comma separated for the `eval_biencoder` step to generate data for each data split.
 
 For Edge-Bi-enc:
-* setting `use_cand_analysis` (evaluate Bi-encoder results and generating initial instructions and prompts for LLMs) to true to perform the step.
+* setting `use_cand_analysis` (evaluate Bi-encoder results and generate initial instructions and prompts for LLMs) to true to perform the step.
 
 # Datasets
 Our work uses the datasets at [Zenodo](https://zenodo.org/records/10432003) and its JSON keys are described in the `dataset` folder. 
 
 # Data and processing sources
-Before data creation, the below sources need to be downloaded.
+Before data creation, the sources below need to be downloaded.
 * SNOMED CT https://www.nlm.nih.gov/healthit/snomedct/archive.html (and use snomed-owl-toolkit to form .owl files)
 * UMLS https://www.nlm.nih.gov/research/umls/licensedcontent/umlsarchives04.html (and mainly use MRCONSO for mapping UMLS to SNOMED CT)
 * MedMentions https://github.com/chanzuckerberg/MedMentions (source of entity linking)
@@ -66,7 +67,7 @@ The below tools and libraries are used.
 * DeepOnto https://github.com/KRR-Oxford/DeepOnto (based on OWLAPI https://owlapi.sourceforge.net/) for ontology processing and complex concept verbalisation
 
 # Data creation scripts
-Based on [OET](https://github.com/KRR-Oxford/OET), the data creation scripts are available at `data-construction` folder, where `run_preprocess_ents_and_data+new.sh` provides an overall shell script that calls the other `.py` files.
+Based on [OET](https://github.com/KRR-Oxford/OET), the data creation scripts are available in `data-construction` folder, where `run_preprocess_ents_and_data+new.sh` provides an overall shell script that calls the other `.py` files.
 
 # Acknowledgement
 * Our dataset is based on [OET](https://github.com/KRR-Oxford/OET) and [zenodo link](https://zenodo.org/record/8228005).
