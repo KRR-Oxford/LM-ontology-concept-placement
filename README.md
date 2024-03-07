@@ -67,7 +67,7 @@ The below tools and libraries are used.
 * DeepOnto https://github.com/KRR-Oxford/DeepOnto (based on OWLAPI https://owlapi.sourceforge.net/) for ontology processing and complex concept verbalisation
 
 # Data creation scripts
-Based on [OET](https://github.com/KRR-Oxford/OET), the data creation scripts are available in `data-construction` folder, where `run_preprocess_ents_and_data+new.sh` provides an overall shell script that calls the other `.py` files.
+Based on [OET](https://github.com/KRR-Oxford/OET) repository: the data creation scripts are available in `data-construction` folder, where `run_preprocess_ents_and_data+new.sh` provides an overall shell script that calls the other `.py` files.
 
 # Acknowledgement
 * Our dataset is based on [OET](https://github.com/KRR-Oxford/OET) and [zenodo link](https://zenodo.org/record/8228005).
