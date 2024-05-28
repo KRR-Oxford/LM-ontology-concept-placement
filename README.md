@@ -1,6 +1,6 @@
 # LM-ontology-concept-placement
 
-This is the official repository for [A Language Model based Framework for New Concept Placement in Ontologies](https://arxiv.org/abs/2402.17897), accepted for [ESWC 2024](https://2024.eswc-conferences.org/accepted-papers/).
+This is the official repository for [A Language Model based Framework for New Concept Placement in Ontologies](https://arxiv.org/abs/2402.17897), accepted for [ESWC 2024](https://2024.eswc-conferences.org/accepted-papers/). Our [presentation slides](https://drive.google.com/file/d/16Z8eT9t2AMkJMGxdH6CnqG3YHfLW0xz1/view?usp=sharing) with updated results on GPT-4 and Llama-2-13B.
 
 The study provides a Language Model based framework (including pre-trained and large language models) for new concept placement in ontologies, where the input includes a mention in a text corpus with an ontology, and the outputs are the predicted edges in the ontology to place the mention.
 
