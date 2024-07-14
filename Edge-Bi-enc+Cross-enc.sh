@@ -23,7 +23,7 @@
 # $6, whether to use a sample of first n rows of mention-edge pairs for creating data for cross-encoder.
 # $7, n rows mention-edge pairs for creating data for cross-encoder
 
-source activate blink38
+source activate onto38
 
 # setting which GPU
 export CUDA_VISIBLE_DEVICES=0
