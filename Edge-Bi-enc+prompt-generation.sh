@@ -20,7 +20,7 @@
 # $4, number of edge seeds before edge enrichment into top-k
 # $5, biencoder training batch size
 
-source activate blink38
+source activate onto38
 
 # setting which GPU
 export CUDA_VISIBLE_DEVICES=1
