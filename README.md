@@ -11,6 +11,8 @@ The method combines LMs with ontology structure, and includes three steps:
 
 This repository provides the implementation of the methods above, running scripts, and the dataset scripts for research-based reproducibility. 
 
+Minimum running code on Google CoLab (ongoing) https://colab.research.google.com/drive/1bAqPOv2PqpYmxNXFgLAuUAq9JghrrNbw?usp=sharing
+
 # Requirements
 The repository is based on `Python 3.8`. 
 
