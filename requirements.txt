@@ -1,6 +1,7 @@
 # using python 3.8
 # other versions of the packages may work as well
-torch==1.10.0 # originally using 1.6.0 before installing deeponto
+#torch==1.10.0 # for conda setting - originally using 1.6.0 before installing deeponto
+torch==1.11.0 # for Google Colab setting
 pysolr==3.8.1
 emoji==0.5.3
 regex==2019.8.19
