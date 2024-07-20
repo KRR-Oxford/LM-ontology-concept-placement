@@ -17,8 +17,8 @@ colorama==0.4.3
 termcolor==1.1.0
 faiss-cpu>=1.6.1
 pytorch_metric_learning==1.4.0
-torchvision==0.11.1 # originally using 0.7.0 before installing deeponto
-pubtator-loader==0.1.4
+#torchvision==0.11.1 # for conda setting - originally using 0.7.0 before installing deeponto
+#pubtator-loader==0.1.4 # for conda setting
 prettytable==3.3.0
 rank_bm25==0.2.2
 deeponto==0.8.8
