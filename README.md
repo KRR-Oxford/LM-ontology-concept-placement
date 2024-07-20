@@ -11,7 +11,7 @@ The method combines LMs with ontology structure, and includes three steps:
 
 This repository provides the implementation of the methods above, running scripts, and the dataset scripts for research-based reproducibility. 
 
-Minimum running code on Google CoLab - [`LM-ontology-concept-placement.ipynb`]().
+Minimum running code on Google CoLab: [`LM-ontology-concept-placement.ipynb`](https://github.com/KRR-Oxford/LM-ontology-concept-placement/blob/main/LM-ontology-concept-placement.ipynb).
 
 # Requirements
 The repository is based on `Python 3.8`. 
