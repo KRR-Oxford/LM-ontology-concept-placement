@@ -20,8 +20,9 @@
 # $3, top-k value
 # $4, number of edge seeds before edge enrichment into top-k
 # $5, biencoder training batch size
-# $6, whether to use a sample of first n rows of mention-edge pairs for creating data for cross-encoder.
-# $7, n rows mention-edge pairs for creating data for cross-encoder
+# $6, whether to use debugging mode in training (training biencoder with first debug_max_lines, which have default value as 1000)
+# $7, whether to use a sample of first n rows of mention-edge pairs for creating data for cross-encoder.
+# $8, n rows mention-edge pairs for creating data for cross-encoder
 
 source activate onto38
 
@@ -100,15 +101,15 @@ bi_enc_bertmodel=cambridgeltl/SapBERT-from-PubMedBERT-fulltext
 bi_enc_model_mark='-sapbert'
 #bi_enc_model_mark='-pubmedbert'
 biencoder_batch_size=$5
-use_debug_bi_enc=false
+use_debug_bi_enc=$6
 debug_max_lines=1000
 loss_mark='-tl' #-tl #''
 train_bi=true
 rep_ents=true # set to true if transfering one biencoder to another dataset
 bs_cand_enc=50 # for entity representation bs as 2000 (max 2300) for NILK with BERT-base around 40g memory use
 bs_eval_bienc=8 # batch size for eval_biencoder
-use_debug_eval_bienc=$6
-debug_max_lines_eval_bienc=$7 #200000 #10000 #200000 #10000 # a set of lines
+use_debug_eval_bienc=$7
+debug_max_lines_eval_bienc=$8 #200000 #10000 #200000 #10000 # a set of lines
 debug_random_sample_eval_bienc=false # true or false
 #eval_set=train,valid,test-in-KB,test-NIL,test-NIL-complex # train,valid,test (can have combinations of them separated using comma)
 eval_set=train,valid
