@@ -13,7 +13,7 @@
 # train_cross=true
 
 # the bi-encoder + cross-encoder evaluation can be run as follows
-# ./step_all_BLINKout+_eval_bienc_cross.sh $1 $2 $3 $4 $5 
+# ./step_all_BLINKout+_eval_bienc_cross.sh $1 $2 $3 $4 $5 $6 $7 $8 $9
 
 # $1, subset
 # $2, whether to use context
@@ -23,6 +23,7 @@
 # $6, whether to use debugging mode in training (training biencoder with first debug_max_lines, which have default value as 1000)
 # $7, whether to use a sample of first n rows of mention-edge pairs for creating data for cross-encoder.
 # $8, n rows mention-edge pairs for creating data for cross-encoder
+# $9, whether to use debugging mode in inference (inference with only a random 100 lines).
 
 source activate onto38
 
@@ -128,7 +129,7 @@ dynamic_emb_extra_ft_baseline=false
 use_NIL_tag=false
 use_NIL_desc=false
 use_NIL_desc_tag=false
-use_debug_inference=true
+use_debug_inference=$9
 inference=true
 bs_inference=8
 crossencoder_model_size=base #base #vs. large
