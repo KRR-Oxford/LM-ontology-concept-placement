@@ -12,13 +12,14 @@
 # use_cand_analysis=true
 
 # the bi-encoder evaluation can be run as follows
-# ./step_all_BLINKout+_eval_bienc_new.sh $1 $2 $3 $4 $5 
+# ./step_all_BLINKout+_eval_bienc_new.sh $1 $2 $3 $4 $5 $6
 
 # $1, subset
 # $2, whether to use context
 # $3, top-k value
 # $4, number of edge seeds before edge enrichment into top-k
 # $5, biencoder training batch size
+# $6. whether to use debugging-trained binencoder model (which trained biencoder with first debug_max_lines, which have default value as 1000)
 
 source activate onto38
 
@@ -103,7 +104,7 @@ loss_mark='-tl' #-tl #''
 train_bi=false
 rep_ents=false # set to true if transfering one biencoder to another dataset
 bs_cand_enc=50 # for entity representation bs as 2000 (max 2300) for NILK with BERT-base around 40g memory use
-use_debug_eval_bienc=false
+use_debug_eval_bienc=$6
 debug_max_lines_eval_bienc=10000 #10000 #200000 #10000
 #eval_set=train,valid,test-in-KB,test-NIL,test-NIL-complex # train,valid,test (can have combinations of them separated using comma)
 #eval_set=valid,test-in-KB,test-NIL #,test-NIL-complex # train,valid,test (can have combinations of them separated using comma)
