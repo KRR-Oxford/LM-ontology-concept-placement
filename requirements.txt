@@ -8,7 +8,7 @@ regex==2019.8.19
 #matplotlib==3.1.0
 tqdm==4.66.1
 nltk==3.6.3
-numpy==1.24.4
+numpy
 segtok==1.5.7
 flair==0.6.1
 pytorch-transformers==1.2.0
