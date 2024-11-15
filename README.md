@@ -14,13 +14,13 @@ This repository provides the implementation of the methods above, running script
 Minimum running code on Google CoLab: [`LM-ontology-concept-placement.ipynb`](https://github.com/KRR-Oxford/LM-ontology-concept-placement/blob/main/LM-ontology-concept-placement.ipynb).
 
 # Requirements
-Note: we noticed some Dependabot alerts related to the previous versions of libraries (Transformers, PyTorch, NLTK, Flair, and tqdm), but we have limited bandwidth to resolve them for this research-based project. Please be aware of this if you are using the project.
-
 The repository is based on `Python 3.8`. 
 
 See `requirements.txt`, for running Edge-Bi-encoder, Edge-Cross-encoder, Inverted Index, Fixed Embedding. 
 
 See `requirements-LLM.txt`, for running instruction tuning LLMs.
+
+Note: we noticed some [Dependabot alerts from GitHub](https://docs.github.com/en/code-security/dependabot/dependabot-alerts/about-dependabot-alerts) related to the previous versions of libraries (Transformers, PyTorch, NLTK, Flair, and tqdm, as in `requirements.txt` and `requirements-LLM.txt`), but we have limited bandwidth to resolve them for this research-based project. Please be aware of this when you are using the project.
 
 Examples to install packages using conda (optional):
 
